@@ -1,0 +1,39 @@
+name: CI Workflow
+
+# Указываем, что воркфлоу запускается при пушах и пулл-реквестах
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    # Используем последнюю версию Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      # Клонируем репозиторий
+      - uses: actions/checkout@v4
+
+      # Устанавливаем Node.js (версия 18, как указано в README)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # Устанавливаем Make (если не установлено)
+      - name: Install Make
+        run: sudo apt-get install -y make
+
+      # Выполняем make setup
+      - name: Setup Project
+        run: make setup
+
+      # Запускаем линтер
+      - name: Run Linter
+        run: make lint
+
+      # Запускаем тесты
+      - name: Run Tests
+        run: make test
