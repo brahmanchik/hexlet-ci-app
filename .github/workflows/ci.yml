@@ -37,3 +37,7 @@ jobs:
       # Запускаем тесты
       - name: Run Tests
         run: make test
+
+      # Выполняем экшен "Hello from Hexlet!"
+      - name: Hello from Hexlet
+        uses: hexlet-components/hello-from-hexlet-action@release
